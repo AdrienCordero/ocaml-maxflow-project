@@ -31,5 +31,7 @@ let () =
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
 
+  Gfile.export "graph.dot" graph (fun x -> x);
+
   ()
 

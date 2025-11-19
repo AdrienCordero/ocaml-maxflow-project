@@ -112,3 +112,20 @@ let from_file path =
   close_in infile ;
   final_graph
   
+(*let export (graph : 'a graph) =
+  let pre = "digraph finite_state_machine {" in
+  let rec aux str (g : 'a graph)= match g with
+    | [] -> str
+    | (_, l)::q -> begin
+      let rec aux2 str2 = function
+        | [] -> str2
+        | t::q -> aux2 (str2^"\n"^(string_of_int (t.src))^" -> "^(string_of_int (t.tgt))) q in
+      aux (str^(aux2 "" l)) q end in
+  let post = "\n}" in
+  pre ^(aux "" graph)^post;;*)
+
+let export (path : path) (graph : 'a graph) (conversion : 'a -> string) =
+  let pre = "digraph finite_state_machine {" in
+  let str = (e_fold graph (fun x arc -> x^((string_of_int arc.src) ^ " -> " ^ (string_of_int arc.tgt)^ "[label=\""^(conversion arc.lbl)^"\"];")) pre)^"}" in
+  let file = open_out path in
+  fprintf file "%s" str ;;
