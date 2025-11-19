@@ -1,12 +1,7 @@
 open Gfile
-<<<<<<< HEAD
 open Graph
 open Tools
-    
-=======
-open Tools    
 
->>>>>>> 780778e (clone_nodes)
 let () =
 
   (* Check the number of command-line arguments *)
