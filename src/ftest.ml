@@ -1,4 +1,6 @@
 open Gfile
+open Graph
+open Tools
     
 let () =
 
@@ -32,6 +34,19 @@ let () =
   let () = write_file outfile graph in
 
   Gfile.export "graph.dot" graph (fun x -> x);
+
+  let g0 = empty_graph in
+  let g1 = new_node g0 1 in
+  let g2 = new_node g1 2 in
+  let g3 = add_arc g2 1 2 10 in
+  Gfile.export "g3.dot" g3 string_of_int;
+
+  let g4 = new_node g3 4 in
+  let g5 = new_node g4 5 in
+  let g6 = add_arc g5 2 4 5 in
+  let g7 = add_arc g6 2 5 6 in
+  let g8 = add_arc g7 2 5 6 in
+  Gfile.export "g8.dot" g8 string_of_int;
 
   ()
 

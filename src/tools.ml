@@ -1,13 +1,5 @@
 open Graph
 
-let rec clone_nodes _gr = 
-  match _gr with 
-  |[] -> []
-  |(id, graphs):: rest -> (id,[]) :: clone_nodes (rest)
-;;
-
-
-let gmap _gr _f = 
-  match _gr with 
-  |(id, arcs) -> (id, List.map _f arcs)
-;;
+let add_arc (graph : 'a graph) (src : id) (tgt : id) (lbl : int) = match find_arc graph src tgt with
+  | None -> new_arc graph ({src = src; tgt = tgt; lbl = lbl})
+  | Some a -> new_arc graph ({src = src; tgt = tgt; lbl = a.lbl + lbl});;

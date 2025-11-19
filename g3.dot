@@ -1,0 +1,1 @@
+digraph finite_state_machine {1 -> 2[label="10"];}
