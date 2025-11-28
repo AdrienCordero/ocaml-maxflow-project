@@ -1,5 +1,5 @@
 open Gfile
-open Graph
+open Ford_fulkerson
 open Tools
 
 let () =
@@ -33,7 +33,7 @@ let () =
   (* Rewrite the graph that has been read. *)
   let () = write_file outfile graph in
 
-  Gfile.export "graph.dot" graph (fun x -> x);
+  (*Gfile.export "graph.dot" graph (fun x -> x);
 
   let g0 = empty_graph in
   let g1 = new_node g0 1 in
@@ -46,7 +46,10 @@ let () =
   let g6 = add_arc g5 2 4 5 in
   let g7 = add_arc g6 2 5 6 in
   let g8 = add_arc g7 2 5 6 in
-  Gfile.export "g8.dot" g8 string_of_int;
+  Gfile.export "g8.dot" g8 string_of_int;*)
 
+  let g = from_file "graphs/graph1.txt" in
+  let ff = ford_fulkerson (gmap g int_of_string) 1 6 in
+  Gfile.export "graph1.dot" ff (fun (a, b) -> Printf.sprintf "%d/%d" a b);
   ()
 
