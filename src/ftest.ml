@@ -52,9 +52,9 @@ let () =
   let ff = ford_fulkerson (gmap g int_of_string) 1 6 in
   Gfile.export "graph1test.dot" ff (fun (a, b) -> Printf.sprintf "%d/%d" a b);
 
-  let l = find_augmenting_path (gmap g int_of_string) 0 5 in
+  (*let l = find_augmenting_path (gmap g int_of_string) 0 5 in
   Printf.printf "taille list : %d\nchemin : " (List.length l);
-  List.iter (fun x -> Printf.printf "%d " x) l;
+  List.iter (fun x -> Printf.printf "%d " x) l;*)
 
   ()
 
