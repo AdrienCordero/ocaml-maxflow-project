@@ -73,6 +73,7 @@ let rec print_chemin = function
     print_chemin q
     end;; 
 
+<<<<<<< HEAD
 
 let ford_fulkerson (g : int graph) (src : id) (tgt : id) : (int * int) graph =
   let rec loop g = 
@@ -89,3 +90,19 @@ let ford_fulkerson (g : int graph) (src : id) (tgt : id) : (int * int) graph =
       in
   convert_residual_into_basic_graph_v2 g (loop g)
 ;;
+=======
+let find_augmenting_path (g : (int* int) graph) (src : id) (tgt : id) : int list = assert false;;
+
+
+
+let ford_fulkerson (g : int graph) (src : id) (tgt : id) : (int * int) graph =
+  src + tgt |> ignore;
+  let i = init g in
+  let rec loop (g: (int*int) graph) : (int * int) graph =
+    let node_list = find_augmenting_path i src tgt in
+    match node_list with 
+      |[] -> i
+      |_ -> loop i
+  in 
+  loop i;;
+>>>>>>> a131d24 (Je prends)
