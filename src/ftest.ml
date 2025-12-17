@@ -2,6 +2,7 @@ open Gfile
 open Ford_fulkerson
 open Tools
 
+
 let () =
 
   (* Check the number of command-line arguments *)
@@ -48,13 +49,36 @@ let () =
   let g8 = add_arc g7 2 5 6 in
   Gfile.export "g8.dot" g8 string_of_int;*)
 
-  let g = from_file "graphs/graph1.txt" in
-  (*let ff = ford_fulkerson (gmap g int_of_string) 1 6 in
-  Gfile.export "graph1test.dot" ff (fun (a, b) -> Printf.sprintf "%d/%d" a b);*)
+  let g = from_file "graphs/graph2.txt" in
+  Gfile.export "graph2.dot" g (fun x -> x);
 
-  let l = find_augmenting_path (gmap g int_of_string) 0 5 in
-  Printf.printf "taille list : %d\nchemin : " (List.length l);
-  List.iter (fun x -> Printf.printf "%d " x) l;
+  (*let g1 = augmenter_chemin (gmap g int_of_string) [0; 3; 6;9;10] 1 in*)
+  (*let g1 = augmenter_chemin (gmap g int_of_string) (algo_profondeur (gmap g int_of_string) [] 0 10) 1 in*)
+  (* let rec print_chemin = function
+    | [] -> ()
+    | t::q -> begin
+      Printf.printf "%d " t;
+      print_chemin q
+      end in
+  let rec loop i g = 
+    if i = 10 then ()
+    else begin
+    let chemin = algo_profondeur g [] 0 12 in
+    Printf.printf "\n%d : " i; print_chemin chemin;
+    let valeur = find_value g chemin max_int in 
+    let g1 = augmenter_chemin g chemin valeur in
+    Gfile.export ("g"^(string_of_int i)^".dot") g (fun x -> string_of_int x);
+    loop (i+1) g1 end in 
+  loop 0 (gmap g int_of_string);  *)
+
+
+  (* Gfile.export "g1.dot" g1 (fun x -> string_of_int x);
+  Gfile.export "g2.dot" g2 (fun x -> string_of_int x); *)
+
+  
+  let g1 = ford_fulkerson (gmap g int_of_string) 0 12 in
+  let int_int_to_string (a, b) = (string_of_int a) ^ "/" ^ (string_of_int b) in
+  Gfile.export "g1.dot" g1 (fun x -> int_int_to_string x);
 
   ()
 
