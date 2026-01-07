@@ -1,1 +1,1 @@
-digraph finite_state_machine {1 -> 2[label="10"];}
+digraph finite_state_machine {1 -> 0[label="0/4"];1 -> 2[label="2/3"];0 -> 2[label="4/4"];0 -> 1[label="6/2"];}
