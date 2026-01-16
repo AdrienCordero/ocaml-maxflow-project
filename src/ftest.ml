@@ -67,9 +67,16 @@ let () =
   let graph2_bip = from_file "graphs/graph2_bip.txt" in
   Gfile.export "graph2_bip.dot" graph2_bip (fun x -> x);
 
+  let graph1_part3 = from_file "graphs/graph1_part3.txt" in
+  Gfile.export "graph1_part3.dot" graph1_part3 (fun x -> x);
+
   (*let g1 = augmenter_chemin (gmap g int_of_string) [0; 3; 6;9;10] 1 in*)
   (*let g1 = augmenter_chemin (gmap g int_of_string) (algo_profondeur (gmap g int_of_string) [] 0 10) 1 in*)
   let int_int_to_string (a, b) = (string_of_int a) ^ "/" ^ (string_of_int b) in
+  let int_int_to_string_v2 (a, b) = "(c=" ^ (string_of_int a) ^ ",p=" ^ (string_of_int b) ^ ")" in
+  (*
+  let int_int_int_to_string (a, b, c) = "(c=" ^ (string_of_int a) ^ "/" ^ (string_of_int b) ^ ",p=" ^ (string_of_int c) ^ ")" in
+  *)
   
   let rec print_chemin = function
     | [] -> ()
@@ -85,9 +92,25 @@ let () =
     let valeur = find_value g chemin max_int in 
     let g1 = augmenter_chemin g chemin valeur in
     Gfile.export ("ite_"^(string_of_int i)^".dot") g (fun x -> string_of_int x);
-    Gfile.export "converted_graph.dot" (convert_residual_into_basic_graph_v2 (gmap graph1 int_of_string) g) (fun x -> int_int_to_string x);
+    Gfile.export "converted_graph.dot" (convert_residual_into_basic_graph (gmap graph1 int_of_string) g) (fun x -> int_int_to_string x);
     loop (i+1) g1 src dst end in 
+  Printf.printf "TEST SUR 10 ITERATIONS POUR FORD FULKERSON \n";
   loop 0 (gmap graph2_bip int_of_string) 0 11; 
+  Printf.printf " \n";
+
+  let rec loop2 i g src dst= 
+    if i = 10 then ()
+    else begin
+    let chemin = algo_dijkstra g src dst in
+    Printf.printf "\n%d : " i; print_chemin chemin;
+    let valeur = find_value2 g chemin max_int in 
+    let g1 = augmenter_chemin2 g chemin valeur in
+    Gfile.export ("ite2_"^(string_of_int i)^".dot") g (fun x -> int_int_to_string_v2 x);
+    (*Gfile.export "converted_graph.dot" (convert_residual_into_basic_graph2 (gmap graph1 int_int_to_string_v2) g) (fun x -> int_int_int_to_string x);*)
+    loop2 (i+1) g1 src dst end in 
+  Printf.printf "TEST SUR 10 ITERATIONS POUR MAX_FLOW MIN_COST \n";
+  loop2 0 (g_init (gmap graph1_part3 int_of_string)) 0 7; 
+  Printf.printf " \n";
   
   (* Gfile.export "g1.dot" g1 (fun x -> string_of_int x);
   Gfile.export "g2.dot" g2 (fun x -> string_of_int x); *)
@@ -110,5 +133,13 @@ let () =
   let ff_on_graph2_bip = ford_fulkerson (gmap graph2_bip int_of_string) 0 11 in
   Gfile.export "g2_bip.dot" ff_on_graph2_bip (fun x -> int_int_to_string x);
 
+  let graph1_part3_init = g_init (gmap graph1_part3 int_of_string) in
+  Gfile.export "graph1_part3.dot" graph1_part3_init (fun x -> int_int_to_string_v2 x);
+
+  (*
+  let mfmc_on_graph1 = max_flow_min_cost graph1_part3_init 0 7 in
+  Gfile.export "g1_mfmc.dot" mfmc_on_graph1 (fun x -> int_int_int_to_string x);
+  *)
+  
   ()
 
