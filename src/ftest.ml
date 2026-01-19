@@ -74,9 +74,7 @@ let () =
   (*let g1 = augmenter_chemin (gmap g int_of_string) (algo_profondeur (gmap g int_of_string) [] 0 10) 1 in*)
   let int_int_to_string (a, b) = (string_of_int a) ^ "/" ^ (string_of_int b) in
   let int_int_to_string_v2 (a, b) = "(c=" ^ (string_of_int a) ^ ",p=" ^ (string_of_int b) ^ ")" in
-  (*
   let int_int_int_to_string (a, b, c) = "(c=" ^ (string_of_int a) ^ "/" ^ (string_of_int b) ^ ",p=" ^ (string_of_int c) ^ ")" in
-  *)
   
   let rec print_chemin = function
     | [] -> ()
@@ -136,10 +134,8 @@ let () =
   let graph1_part3_init = g_init (gmap graph1_part3 int_of_string) in
   Gfile.export "graph1_part3.dot" graph1_part3_init (fun x -> int_int_to_string_v2 x);
 
-  (*
   let mfmc_on_graph1 = max_flow_min_cost graph1_part3_init 0 7 in
   Gfile.export "g1_mfmc.dot" mfmc_on_graph1 (fun x -> int_int_int_to_string x);
-  *)
   
   ()
 

@@ -41,9 +41,10 @@ let algo_dijkstra (g: (int*int) graph) (src : int) (tgt : int) : (int list) =
 
   (* Mise à jour des distances*)
   let maj_distances (dist : int array) (pred : int array) (s1 : int ) (s2 : int) ((cap,cost) : int*int) =
-    if (cap >0 && dist.(s2) > dist.(s1) + cost) then
+    if (cap >0 && dist.(s1) <> max_int && dist.(s2) > dist.(s1) + cost) then begin
       dist.(s2) <- dist.(s1) + cost;
       pred.(s2) <- s1
+    end
   in
 
   (* Renvoie le sommet non visité avec la distance minimale *)
@@ -74,7 +75,7 @@ let algo_dijkstra (g: (int*int) graph) (src : int) (tgt : int) : (int list) =
           visited.(a)<-true; (* Je passe le sommet comme étant visité *)
           let arcs = out_arcs g a in (* Je regarde les voisins de ce sommet min *)
           List.iter(fun arc -> maj_distances dist pred a arc.tgt arc.lbl) (arcs); (* Je mets à jour les distances *)
-          loop q
+          loop (List.filter (fun x-> x<>a) q)
         end
   in
   loop q;
@@ -149,7 +150,7 @@ let arc_int_to_int_int_v3 (a : int arc) (lbl : int) : (int * int) arc = {src = a
 
 let arc_int_int_to_int_int_int (a : (int* int) arc) (lbl : int) : (int * int * int) arc = 
   let (cap,cost) = a.lbl in 
-  {src = a.src; tgt = a.tgt; lbl = (lbl - cap,lbl,cost)}
+  {src = a.src; tgt = a.tgt; lbl = (cap-lbl,cap,cost)}
 ;;
 
 let convert_residual_into_basic_graph (g_init : int graph) (g : int graph) : (int * int) graph =
